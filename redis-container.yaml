@@ -1,0 +1,10 @@
+{
+  "metadata": {
+      "name": "redis"
+  },
+  "image":{
+      "image": "docker.io/library/redis:latest"
+  },
+  "linux": {
+  }
+}

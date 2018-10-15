@@ -1,0 +1,12 @@
+{
+  "metadata": {
+      "name": "iperf"
+  },
+  "image":{
+      "image": "mlabbe/iperf"
+  },
+  "port_mappings": [{
+        "container_port":80,
+        "host_port": 8080
+    }]
+}

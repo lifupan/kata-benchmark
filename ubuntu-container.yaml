@@ -1,0 +1,18 @@
+{
+  "metadata": {
+      "name": "ubuntu"
+  },
+  "image":{
+      "image": "ubuntu"
+  },
+  "port_mappings": [{
+        "container_port":80,
+        "host_port": 8080
+    }],
+  "mounts": [
+	{
+		"container_path": "/test",
+		"host_path": "/dev/sdb1"
+	}
+  ]
+}

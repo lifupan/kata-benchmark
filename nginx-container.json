@@ -1,0 +1,8 @@
+{
+  "metadata": {
+      "name": "nginx"
+  },
+  "image":{
+      "image": "fupanli/nginx-benchmark"
+  }
+}
