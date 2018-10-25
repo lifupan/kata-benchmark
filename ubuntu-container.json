@@ -12,7 +12,7 @@
   "mounts": [
 	{
 		"container_path": "/test",
-		"host_path": "/dev/sdb1"
+		"host_path": "/root/kata-benchmark"
 	}
   ]
 }
