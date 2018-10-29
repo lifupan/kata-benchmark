@@ -2,6 +2,7 @@
 
 pod=""
 c=""
+threads=1
 
 cleanup(){
 	if [ "$pod" != "" ]; then
@@ -9,6 +10,19 @@ cleanup(){
 	fi
 	killall containerd
 }
+
+usage(){
+	echo "Usage: $0 [numjobs]"
+	exit 0
+}
+
+#if [ "$1" == '--help' || "$1" == '-h' ]; then
+#	usage()
+#fi
+
+if [ "$1" != "" ]; then
+	threads=$1
+fi
 
 echo "start containerd"
 sudo containerd --config /etc/containerd/config.toml >/dev/null 2>&1 &
@@ -41,8 +55,16 @@ if [ ! -d $scriptDir/../fioLogs ]; then
 	mkdir $scriptDir/../fioLogs
 fi
 
+sed -i "s/^numjobs=.*$/numjobs=$threads/" $scriptDir/../fio-rand-4k-read.fio
+sed -i "s/^numjobs=.*$/numjobs=$threads/" $scriptDir/../fio-rand-4k-write.fio
+sed -i "s/^numjobs=.*$/numjobs=$threads/" $scriptDir/../fio-rand-128k-read.fio
+sed -i "s/^numjobs=.*$/numjobs=$threads/" $scriptDir/../fio-rand-128k-write.fio
+
 sudo crictl exec -ti $c apt-get update
 sudo crictl exec -ti $c apt-get install fio -y
 sudo crictl exec -ti $c fio --output=/test/fioLogs/fio-4k-read.log /test/fio-rand-4k-read.fio
+sudo crictl exec -ti $c fio --output=/test/fioLogs/fio-4k-read.log /test/fio-rand-4k-write.fio
+sudo crictl exec -ti $c fio --output=/test/fioLogs/fio-4k-read.log /test/fio-rand-128k-read.fio
+sudo crictl exec -ti $c fio --output=/test/fioLogs/fio-4k-read.log /test/fio-rand-128k-write.fio
 
 cleanup
