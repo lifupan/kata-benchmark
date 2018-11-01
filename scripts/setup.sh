@@ -25,7 +25,7 @@ install_essential(){
 install_shimv2(){
 	go get github.com/kata-containers/runtime
 	pushd $GOPATH/src/github.com/kata-containers/runtime
-	git add hyper https://github.com/hyperhq/kata-runtime
+	git remote add hyper https://github.com/hyperhq/kata-runtime
 	git fetch hyper
 	git checkout -b shimv2 hyper/shimv2
 	make 
