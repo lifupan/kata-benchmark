@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ -z "$GOPATH" ]; then
+	export GOPATH=/root/go
+fi
+
 install_kata(){
 	ARCH=$(arch)
 	sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/katacontainers:/releases:/${ARCH}:/master/xUbuntu_$(lsb_release -rs)/ /' > /etc/apt/sources.list.d/kata-containers.list"
@@ -19,7 +23,7 @@ install_docker(){
 
 install_essential(){
 	sudo apt-get update
-	sudo apt-get install golang-1.10-go libseccomp-dev btrfs-tools git -y
+	sudo apt-get install wget golang-1.10-go libseccomp-dev btrfs-tools git -y
 }
 
 install_shimv2(){
@@ -60,6 +64,12 @@ install_cri(){
 	popd
 }
 
+install_gvisor(){
+        wget https://storage.googleapis.com/gvisor/releases/nightly/latest/runsc
+        chmod +x runsc
+        sudo mv runsc /usr/local/bin/
+}
+
 export PATH=$PATH:/usr/lib/go-1.10/bin
 
 install_essential || 
@@ -95,6 +105,18 @@ fi
 install_cri
 if [ $? != 0 ]; then
         echo "Error: installing cri failed"
+        exit 1
+fi
+
+install_docker
+if [ $? != 0 ]; then
+        echo "Error: installing docker failed"
+        exit 1
+fi
+
+install_gvisor
+if [ $? != 0 ]; then
+        echo "Error: installing gvisor failed"
         exit 1
 fi
 
