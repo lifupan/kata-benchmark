@@ -4,7 +4,6 @@ JOBS=1
 RUNTIME="runc"
 KVM=0
 HOST=0
-
 scriptDir=`dirname $0`
 scriptDir=`realpath $scriptDir`
 prjDir="$scriptDir/../"
@@ -126,8 +125,6 @@ sed -i "s/^numjobs=.*$/numjobs=$JOBS/" $scriptDir/../fio-rand-4k-write.fio
 sed -i "s/^numjobs=.*$/numjobs=$JOBS/" $scriptDir/../fio-rand-128k-read.fio
 sed -i "s/^numjobs=.*$/numjobs=$JOBS/" $scriptDir/../fio-rand-128k-write.fio
 
-set -x
-
 prefix=""
 if [ $HOST == 0 ]; then
 	EXEC="sudo docker exec -ti $ID"
@@ -136,11 +133,12 @@ else
 	EXEC="sudo"
 	RUNTIME="host"
 	prefix="$VOLUME"
-	sed -i "s#^filename=.*\$#filename=${prefix}/fio-rand-read#" $scriptDir/../fio-rand-4k-read.fio
-	sed -i "s#^filename=.*\$#filename=${prefix}/fio-rand-read#" $scriptDir/../fio-rand-4k-write.fio
-	sed -i "s#^filename=.*\$#filename=${prefix}/fio-rand-read#" $scriptDir/../fio-rand-128k-read.fio
-	sed -i "s#^filename=.*\$#filename=${prefix}/fio-rand-read#" $scriptDir/../fio-rand-128k-write.fio
 fi
+
+sed -i "s#^filename=.*\$#filename=${prefix}/fio-rand-read#" $scriptDir/../fio-rand-4k-read.fio
+sed -i "s#^filename=.*\$#filename=${prefix}/fio-rand-read#" $scriptDir/../fio-rand-4k-write.fio
+sed -i "s#^filename=.*\$#filename=${prefix}/fio-rand-read#" $scriptDir/../fio-rand-128k-read.fio
+sed -i "s#^filename=.*\$#filename=${prefix}/fio-rand-read#" $scriptDir/../fio-rand-128k-write.fio
 
 APPENDIX="rootfs"
 PREFIX=`dirname $VOLUME`
