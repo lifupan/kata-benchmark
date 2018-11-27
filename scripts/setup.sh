@@ -50,7 +50,7 @@ install_containerd(){
 install_cni(){
 	go get github.com/containernetworking/plugins
 	pushd $GOPATH/src/github.com/containernetworking/plugins
-	./build.sh
+	./build_linux.sh
 	mkdir /opt/cni
 	cp -r bin /opt/cni/
 	popd
@@ -136,3 +136,8 @@ sudo cp $dataDir/10-mynet.conf  /etc/cni/net.d/
 echo "Deploy crictl configure file"
 sudo cp $dataDir/crictl.yaml /etc/
 
+echo "Deploy containerd service and start it"
+sudo cp $dataDir/containerd.service /etc/systemd/system/
+sudo systemctl enable containerd.service
+sudo systemctl stop docker 
+sudo systemctl start containerd.service
