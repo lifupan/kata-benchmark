@@ -103,6 +103,7 @@ cat >$tempdir/config.toml <<EOF
     conf_dir = "/etc/cni/net.d"
 EOF
 
+export FOCUS="\[Conformance\]"
 
 ./hack/test-e2e-node.sh
 popd
