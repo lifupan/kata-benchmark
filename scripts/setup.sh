@@ -1,5 +1,4 @@
 #!/bin/bash
-
 if [ -z "$GOPATH" ]; then
 	export GOPATH=/root/go
 fi
@@ -23,20 +22,17 @@ install_docker(){
 
 install_essential(){
 	sudo apt-get update
-	sudo apt-get install wget golang-1.10-go libseccomp-dev btrfs-tools git -y
+	sudo apt-get install wget libseccomp-dev btrfs-tools pkg-config git -y
 }
 
 install_shimv2(){
 	go get github.com/kata-containers/runtime
 	pushd $GOPATH/src/github.com/kata-containers/runtime
-	git remote add hyper https://github.com/hyperhq/kata-runtime
-	git fetch hyper
-	git checkout -b shimv2 hyper/shimv2
 	make 
 	sudo -E PATH=$PATH make install
 	popd
 
-	sed -i 's/image =/#image =/' /usr/share/defaults/kata-containers/configuration.toml
+	sudo sed -i 's/image =/#image =/' /usr/share/defaults/kata-containers/configuration.toml
 }
 
 install_containerd(){
@@ -60,7 +56,7 @@ install_cri(){
 	go get github.com/kubernetes-incubator/cri-tools
 	pushd $GOPATH/src/github.com/kubernetes-incubator/cri-tools
 	make
-	make install
+	sudo -E PATH=$PATH make install
 	popd
 }
 
@@ -114,7 +110,7 @@ if [ $? != 0 ]; then
         exit 1
 fi
 
-install_gvisor
+#install_gvisor
 if [ $? != 0 ]; then
         echo "Error: installing gvisor failed"
         exit 1
@@ -127,7 +123,7 @@ dataDir="$prjDir/data"
 
 echo "Deploy the containerd configure file"
 sudo mkdir /etc/containerd/
-cp $dataDir/config.toml /etc/containerd/
+sudo cp $dataDir/config.toml /etc/containerd/
 
 echo "Deploy cni configure file"
 sudo mkdir -p /etc/cni/net.d
