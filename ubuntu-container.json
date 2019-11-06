@@ -3,16 +3,27 @@
       "name": "ubuntu"
   },
   "image":{
-      "image": "ubuntu"
+      "image": "juamorous/ubuntu-ifconfig-ping"
   },
   "port_mappings": [{
         "container_port":80,
         "host_port": 8080
     }],
+    "Tty":  true,
+   "Cmd": ["bash"],
   "mounts": [
 	{
 		"container_path": "/test",
 		"host_path": "/root/kata-benchmark"
 	}
-  ]
+  ],
+  "linux":{
+	  "security_context": {
+	  	"capabilities": {
+			"add_capabilities": [
+				"SYS_ADMIN"
+			]
+		}
+	  }
+  }
 }

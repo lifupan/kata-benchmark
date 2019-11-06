@@ -7,6 +7,7 @@ sudo rm -rf ${ROOTFS_DIR}
 cd $GOPATH/src/github.com/kata-containers/osbuilder/rootfs-builder
 sudo -E GOPATH=$GOPATH AGENT_INIT=yes USE_DOCKER=true ./rootfs.sh "alpine"
 
+#sudo cp /home/fupan/rust_prj/rust-agent/target/x86_64-unknown-linux-musl/debug/kata-agent ${ROOTFS_DIR}/sbin/init
 sudo install -o root -g root -m 0550 -T ../../agent/kata-agent ${ROOTFS_DIR}/sbin/init
 
 cd $GOPATH/src/github.com/kata-containers/osbuilder/initrd-builder
