@@ -2,7 +2,7 @@
 
 [global]
 name=fio-rand-read
-filename=fio-rand-read
+filename=/test/fio-rand-read
 rw=randread
 bs=128K
 direct=1

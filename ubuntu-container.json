@@ -3,7 +3,7 @@
       "name": "ubuntu"
   },
   "image":{
-      "image": "juamorous/ubuntu-ifconfig-ping"
+      "image": "fupanli/ubuntu-fio"
   },
   "port_mappings": [{
         "container_port":80,
