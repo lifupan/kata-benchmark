@@ -1,0 +1,27 @@
+{
+  "metadata": {
+      "name": "ubuntu09"
+  },
+  "image":{
+      "image": "juamorous/ubuntu-ifconfig-ping"
+  },
+  "port_mappings": [{
+        "container_port":80,
+        "host_port": 8080
+    }],
+   "Cmd": ["top"],
+  "mounts": [
+	{
+		"host_path": "/dev/mapper/loop3p1",
+		"container_path": "/lifupantest",
+		"readonly": false,
+		"propagation": 2
+	}
+  ],
+  "linux":{
+	  "resources": {
+	  	"memory_limit_in_bytes": 524288000
+	  }
+
+  }
+}

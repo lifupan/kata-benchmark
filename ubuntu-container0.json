@@ -1,0 +1,41 @@
+{
+  "metadata": {
+      "name": "ubuntu00"
+  },
+  "image":{
+      "image": "juamorous/ubuntu-ifconfig-ping"
+  },
+  "port_mappings": [{
+        "container_port":80,
+        "host_port": 8080
+    }],
+   "command": ["top"],
+   "tty": true,
+  "mounts": [
+	{
+		"host_path": "/home/fupan/go/src/github.com/opensnoop-native",
+		"container_path": "/opensnoop-native",
+		"readonly": true,
+		"propagation": 2
+	},
+	{
+		"host_path": "/home/fupan/test_volume",
+		"container_path": "/dev/vdb",
+		"readonly": false,
+		"propagation": 2
+	}
+  ],
+  "linux":{
+          "security_context": {
+                "capabilities": {
+                        "add_capabilities": [
+                                "SYS_ADMIN"
+                        ]
+                }
+          },
+          "resources": {
+                "memory_limit_in_bytes": 524288000
+          }
+
+  }
+}

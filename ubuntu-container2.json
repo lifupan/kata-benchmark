@@ -1,0 +1,34 @@
+{
+  "metadata": {
+      "name": "ubuntu04"
+  },
+  "image":{
+      "image": "juamorous/ubuntu-ifconfig-ping"
+  },
+  "port_mappings": [{
+        "container_port":80,
+        "host_port": 8080
+    }],
+   "Cmd": ["/bin/sh"],
+  "mounts": [
+	{
+		"host_path": "/root/kata-benchmark",
+		"container_path": "/test",
+		"readonly": false,
+		"propagation": 2
+	}
+  ],
+  "linux":{
+	  "security_context": {
+	  	"capabilities": {
+			"add_capabilities": [
+				"SYS_ADMIN"
+			]
+		}
+	  },
+	  "resources": {
+	  	"memory_limit_in_bytes": 524288000
+	  }
+
+  }
+}
